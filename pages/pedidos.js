@@ -1,14 +1,14 @@
 import React from 'react';
 import Layout from '../components/Layout';
 
-const Index = () => {
+const pedidos = () => {
   return (
     <div>
       <Layout>
-        <h1 className='text-2xl text-gray-800 font-ligth'> Clientes </h1>
+        <h1 className='text-2xl text-gray-800 font-ligth'> Pedidos </h1>
       </Layout>
     </div>
   )
 }
 
-export default Index
+export default pedidos
