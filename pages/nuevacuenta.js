@@ -33,7 +33,7 @@ const nuevacuenta = () => {
   //Validacion del formulario
   const formik = useFormik({
     initialValues: {
-      nombre: 'Holas',
+      nombre: '',
       apellido: '',
       email: '',
       password: ''
