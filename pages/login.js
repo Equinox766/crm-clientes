@@ -36,7 +36,7 @@ const login = () => {
               .required('El email es obligatorio'),
       password: Yup.string()
               .required('El password no puede ir vacio')
-              .min(6, 'El password debe de ser de almenos 6 caracteres')
+              .min(5, 'El password debe de ser de almenos 6 caracteres')
     }),
     onSubmit: async valores => {
       const { email, password } = valores;
