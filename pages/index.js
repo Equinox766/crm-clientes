@@ -1,11 +1,13 @@
 import { gql, useQuery } from '@apollo/client';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 import Layout from '../components/Layout';
+import { FaSync } from 'react-icons/fa';
 
 
 const OBTENER_CLIENTES_USUARIO = gql`
-  query ObtenerPedidos {
+  query ObtenerClientesVendedor {
     obtenerClienteVendedor {
       id
       nombre
@@ -23,7 +25,7 @@ const Index = () => {
 
   //Consulta de apollo
 
-  const { data, loading: sessionLoading, error} =useQuery(OBTENER_CLIENTES_USUARIO);
+  const { data, loading: sessionLoading, error} =useQuery(OBTENER_CLIENTES_USUARIO,{ fetchPolicy: 'network-only'},);
 
   // Routing
   const router = useRouter();
@@ -32,12 +34,24 @@ const Index = () => {
   
   if(!data.obtenerClienteVendedor) {
     router.push('/login');
-    return null
+    return null;
+  }
+  const reFetch = () => {
+    router.push('/');
   }
   return (
     <div>
       <Layout>
         <h1 className='text-2xl text-gray-800 font-ligth'> Clientes </h1>
+        <div className="flex">
+          <Link href="/nuevocliente">
+            <p className='bg-blue-800 py-2 px-5 mt-3 mr-2 text-sm hover:bg-gray-800 mb-3 uppercase font-bold inline-block text-white rounded '> Nuevo Cliente</p>
+          </Link>
+          <Link href="/">
+            <p className='bg-blue-800 py-2 px-5 mt-3 text-sm hover:bg-gray-800 mb-3 uppercase font-bold inline-block text-white rounded '><FaSync size={20} /></p>
+          </Link>
+        
+        </div>
         <table className='table-auto shadow-md mt-10 w-full w-lg'>
           <thead className='bg-gray-800'>
             <tr className='text-white'>
@@ -47,6 +61,7 @@ const Index = () => {
             </tr>
           </thead>
           <tbody className='bg-white'>
+            {console.log(data.obtenerClienteVendedor)}
             {data.obtenerClienteVendedor.map( cliente => (
               <tr key={cliente.id}>
                 <td className='border px-4 py-2'>{ cliente.nombre } { cliente.apellido }</td>

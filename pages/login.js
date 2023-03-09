@@ -15,14 +15,15 @@ const AUTENTICAR_USUARIO = gql`
 `;
 
 const login = () => {
-  //State para el mensaje
-  const [ mensaje, guardarMensaje ] = useState(null);
-
-  //Mutation para crear nuevos usuarios
-  const [ autenticarUsuario ] = useMutation(AUTENTICAR_USUARIO);
-
   //Routing
   const router = useRouter();
+  
+  //Mutation para crear nuevos usuarios
+  const [ autenticarUsuario ] = useMutation(AUTENTICAR_USUARIO);
+  
+  //State para el mensaje
+  const [ mensaje, guardarMensaje ] = useState(null);
+  
 
   //Validacion del formulario
   const formik = useFormik({

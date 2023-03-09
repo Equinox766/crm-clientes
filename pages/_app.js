@@ -9,8 +9,6 @@ const MyApp = ({ Component, pageProps}) => {
         </ApolloProvider>
     )
 }
-MyApp.defaultProps = {
-    returnNullOnFailedQueries: true,
-};
+
 
 export default MyApp;

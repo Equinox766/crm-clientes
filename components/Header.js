@@ -25,7 +25,6 @@ const Header = () => {
     if(loading) return null;
     if(!data.obtenerUsuario) {
         router.push('/login');
-        return null
 
     }
 
@@ -42,7 +41,7 @@ const Header = () => {
         <button 
             onClick={ () => cerrarSesion() }
             type='button'
-            className='bg-blue-800 w-full sm:w-auto font-bold uppercase text-xs rounded py-1 px-2 text-white shadow-md'
+            className='bg-blue-800 hover:bg-gray-800 w-full sm:w-auto font-bold uppercase text-xs rounded py-1 px-2 text-white shadow-md'
         >
             Cerrar Sesión
         </button>
