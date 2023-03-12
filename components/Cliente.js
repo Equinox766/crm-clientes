@@ -5,8 +5,8 @@ import { gql, useMutation } from '@apollo/client';
 
 
 const ELIMINAR_CLIENTE = gql`
-    mutation EliminarCliente($eliminarClienteId: ID!) {
-        eliminarCliente(id: $eliminarClienteId)
+    mutation EliminarCliente($id: ID!) {
+        eliminarCliente(id: $id)
     }
 `;
 const Cliente = ({ cliente }) => {
@@ -36,7 +36,7 @@ const Cliente = ({ cliente }) => {
                 
                 try {
                     // Eliminar por ID
-                    const data  = await eliminarCliente({
+                    const { data }  = await eliminarCliente({
                         variables: {
                             id: id
                         }
@@ -44,7 +44,7 @@ const Cliente = ({ cliente }) => {
                     console.log(data);
                     Swal.fire(
                         'Eliminado!',
-                        
+                        data.eliminarCliente,
                         'success'
                     )
                 } catch (error) {
