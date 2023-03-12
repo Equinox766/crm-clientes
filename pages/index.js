@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import Layout from '../components/Layout';
 import { FaSync } from 'react-icons/fa';
+import Cliente from '../components/Cliente';
 
 
 const OBTENER_CLIENTES_USUARIO = gql`
@@ -25,7 +26,7 @@ const Index = () => {
 
   //Consulta de apollo
 
-  const { data, loading: sessionLoading, error} =useQuery(OBTENER_CLIENTES_USUARIO,{ fetchPolicy: 'network-only'},);
+  const { data, loading: sessionLoading, error} =useQuery(OBTENER_CLIENTES_USUARIO,{ fetchPolicy: 'cache-and-network'},);
 
   // Routing
   const router = useRouter();
@@ -47,9 +48,6 @@ const Index = () => {
           <Link href="/nuevocliente">
             <p className='bg-blue-800 py-2 px-5 mt-3 mr-2 text-sm hover:bg-gray-800 mb-3 uppercase font-bold inline-block text-white rounded '> Nuevo Cliente</p>
           </Link>
-          <Link href="/">
-            <p className='bg-blue-800 py-2 px-5 mt-3 text-sm hover:bg-gray-800 mb-3 uppercase font-bold inline-block text-white rounded '><FaSync size={20} /></p>
-          </Link>
         
         </div>
         <table className='table-auto shadow-md mt-10 w-full w-lg'>
@@ -58,16 +56,16 @@ const Index = () => {
               <th className='w-1/5 py-2'>Nombre</th>
               <th className='w-1/5 py-2'>Empresa</th>
               <th className='w-1/5 py-2'>Email</th>
+              <th className='w-1/5 py-2'>Eliminar</th>
             </tr>
           </thead>
           <tbody className='bg-white'>
-            {console.log(data.obtenerClienteVendedor)}
+            
             {data.obtenerClienteVendedor.map( cliente => (
-              <tr key={cliente.id}>
-                <td className='border px-4 py-2'>{ cliente.nombre } { cliente.apellido }</td>
-                <td className='border px-4 py-2'>{ cliente.empresa }</td>
-                <td className='border px-4 py-2'>{ cliente.email }</td>
-              </tr>
+              <Cliente 
+                key={cliente.id}
+                cliente={cliente}
+              />
             ))}
           </tbody>
         </table>
