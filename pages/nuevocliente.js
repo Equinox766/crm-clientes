@@ -4,6 +4,8 @@ import Layout from '../components/Layout';
 import * as Yup from 'yup';
 import { gql, useMutation } from '@apollo/client';
 import Router, { useRouter } from 'next/router';
+import Swal from 'sweetalert2';
+
 
 
 
@@ -97,6 +99,12 @@ const nuevocliente = () => {
             }
           }
         });
+        //SweetALERT
+        Swal.fire(
+          'Creado!',
+          'Se creo el cliente correctamente',
+          'success'
+      )
         router.push('/')
       } catch (error) {
         guardarMensaje(error.message);

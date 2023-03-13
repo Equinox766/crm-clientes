@@ -1,7 +1,9 @@
 import React from 'react';
-import { TiDeleteOutline } from 'react-icons/ti';
+import { TiDeleteOutline, TiEdit } from 'react-icons/ti';
 import Swal from 'sweetalert2';
 import { gql, useMutation } from '@apollo/client';
+import Router  from 'next/router';
+
 
 
 const ELIMINAR_CLIENTE = gql`
@@ -9,20 +11,47 @@ const ELIMINAR_CLIENTE = gql`
         eliminarCliente(id: $id)
     }
 `;
+
+const OBTENER_CLIENTES_USUARIO = gql`
+  query ObtenerClientesVendedor {
+    obtenerClienteVendedor {
+      id
+      nombre
+      apellido
+      email
+      empresa
+      telefono
+      vendedor
+    }
+  }
+
+`;
+
 const Cliente = ({ cliente }) => {
 
     //MUTATION PARA ELIMINAR CLIENTE
     const [eliminarCliente] = useMutation(ELIMINAR_CLIENTE, {
         fetchPolicy: "network-only",
-      });
+        update(cache) {
+            // Obtener una copia del objeto del cache
+            const { obtenerClienteVendedor } = cache.readQuery({ query: OBTENER_CLIENTES_USUARIO});
+            
+            //Reescribir el cache
+            cache.writeQuery({
+                query: OBTENER_CLIENTES_USUARIO,
+                data: {
+                    obtenerClienteVendedor : obtenerClienteVendedor.filter(clienteActual => clienteActual.id !== id)
+                }
+            })
+        }
+      }, );
     
     const { nombre, apellido, empresa, email, id } = cliente;
 
     //Elimina un cliente
-    const confirmarEliminarCliente = id => {
-        console.log(id);
+    const confirmarEliminarCliente = () => {
         Swal.fire({
-            title: '¿Desea eliminar cliente?',
+            title: `¿Desea eliminar a ${nombre} ${apellido}?`,
             text: "Esta accion no se puede deshacer!",
             icon: 'warning',
             showCancelButton: true,
@@ -41,7 +70,6 @@ const Cliente = ({ cliente }) => {
                             id: id
                         }
                     });
-                    console.log(data);
                     Swal.fire(
                         'Eliminado!',
                         data.eliminarCliente,
@@ -53,6 +81,13 @@ const Cliente = ({ cliente }) => {
             }
           })
     }
+
+    const editarCliente = () => {
+        Router.push({
+            pathname:"/editarcliente/[id]", 
+            query: { id }
+        })
+    }
   return (
     
     <tr>
@@ -63,10 +98,21 @@ const Cliente = ({ cliente }) => {
             <button
                 type='button'
                 className='flex justify-center items-center bg-red-800 py-2 px-4 w-full text-white rounded text-xs uppercase font-bold'
-                onClick={() => confirmarEliminarCliente(id)}
+                onClick={() => confirmarEliminarCliente()}
             >
                 Eliminar
                 <TiDeleteOutline size={30} className="ml-2"/>
+            </button>
+        </td>
+        <td className='border px-4 py-2'>
+            <button
+                type='button'
+                className='flex justify-center items-center bg-green-600 py-2 px-4 w-full text-white rounded text-xs uppercase font-bold'
+                onClick={() => editarCliente()}
+            >
+                Editar
+                <TiEdit size={25} className="ml-2"/>
+                
             </button>
         </td>
     </tr>
