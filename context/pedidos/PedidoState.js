@@ -11,7 +11,7 @@ const PedidoState = ({children}) => {
     //State del pedido
     const initialState = {
         cliente: {},
-        producto: [],
+        productos: [],
         total: 0
     }
 
@@ -19,14 +19,27 @@ const PedidoState = ({children}) => {
 
     //Modifica el cliente 
     const agregarCliente = cliente => {
-        console.log(cliente);
+        // console.log(cliente);
+        dispatch({
+            type: SELECCIONAR_CLIENTE,
+            payload: cliente
+        })
+    }
+
+    const agregarProducto = productos => {
+        // console.log(productos);
+        dispatch({
+            type: SELECCIONAR_PRODUCTO,
+            payload: productos
+        })
     }
 
 
     return (
         <PedidoContext.Provider
             value={{
-                agregarCliente
+                agregarCliente,
+                agregarProducto
             }}
         >
             {children}
