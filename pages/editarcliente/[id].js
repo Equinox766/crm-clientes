@@ -85,7 +85,7 @@ const EditarCliente = () => {
             });
             //SweetALERT
             Swal.fire(
-                'Eliminado!',
+                'Actualizado!',
                 'El cliente se actualizo correctamente',
                 'success'
             )
