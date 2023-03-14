@@ -25,7 +25,7 @@ const PedidoState = ({children}) => {
             payload: cliente
         })
     }
-
+    //Modifica los productos
     const agregarProducto = productos => {
         // console.log(productos);
         dispatch({
@@ -34,12 +34,24 @@ const PedidoState = ({children}) => {
         })
     }
 
+    //Modifica las cantidades de los productos
+    const cantidadProducto = nuevoProducto => {
+        // console.log('desde PedidosState');
+        // console.log(nuevoProducto);
+        dispatch({
+            type: CANTIDAD_PRODUCTO,
+            payload: nuevoProducto
+        })
+    }
+
 
     return (
         <PedidoContext.Provider
             value={{
+                productos: state.productos,
                 agregarCliente,
-                agregarProducto
+                agregarProducto,
+                cantidadProducto
             }}
         >
             {children}
