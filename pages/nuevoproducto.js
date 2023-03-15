@@ -91,7 +91,7 @@ const nuevoproducto = () => {
             }
         });
         Swal.fire(
-            'Creado!',
+            'Correcto!',
             'Se creo correctamente el producto',
             'success'
         )

@@ -8,7 +8,7 @@ const ResumenPedido = () => {
     const pedidoContext = useContext(PedidoContext);
     const { productos } = pedidoContext;
 
-    console.log(productos);
+    // console.log(productos);
 
     return (
     <>
