@@ -32,7 +32,7 @@ const pedidos = () => {
   const {data, loading, error} = useQuery(OBTENER_PEDIDOS);
   if(loading) return "Cargando..."
 
-  const { obtenerPedidoVendedor } = data;
+  const { obtenerPedidoVendedor } = data || {};
   return (
     <div>
       <Layout>
@@ -40,17 +40,21 @@ const pedidos = () => {
           <Link href="/nuevopedido">
             <p className='bg-blue-800 py-2 px-5 mt-3 mr-2 text-sm hover:bg-gray-800 mb-3 uppercase font-bold inline-block text-white rounded '> Nuevo Pedido</p>
           </Link>
-          {obtenerPedidoVendedor.length === 0 ? (
-            <p className='mt-5 text-center text2xl'>No hay pedidos aún</p>
+          {obtenerPedidoVendedor ? (
+            obtenerPedidoVendedor.length === 0 ? (
+              <p className='mt-5 text-center text2xl'>No hay pedidos aún</p>
+            ) : (
+              obtenerPedidoVendedor.map(pedido => (
+                // renderizar componentes de pedidos
+                <Pedido 
+                  key={pedido.id}
+                  pedido={pedido}
+    
+                />
+              ))
+            )
           ) : (
-            obtenerPedidoVendedor.map(pedido => (
-              <Pedido 
-                key={pedido.id}
-                pedido={pedido}
-
-              />
-
-            ))
+            <p>Cargando...</p>
           )}
       </Layout>
     </div>

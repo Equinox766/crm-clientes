@@ -33,7 +33,7 @@ const Index = () => {
 
   if (sessionLoading) return <p>Cargando...</p>
   
-  if(!data.obtenerClienteVendedor) {
+  if(!data || !data.obtenerClienteVendedor) {
     router.push('/login');
     return null;
   }
@@ -62,7 +62,7 @@ const Index = () => {
           </thead>
           <tbody className='bg-white'>
             
-            {data.obtenerClienteVendedor.map( cliente => (
+            {data.obtenerClienteVendedor && data.obtenerClienteVendedor.map( cliente => (
               <Cliente 
                 key={cliente.id}
                 cliente={cliente}

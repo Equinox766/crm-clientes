@@ -100,7 +100,8 @@ const EditarCliente = () => {
 
     if(loading) return "Cargando...";
     // console.log(data.obtenerCliente);
-    const { obtenerCliente } = data;
+    
+    const { obtenerCliente } = data ?? {};
 
   return (
     <Layout>

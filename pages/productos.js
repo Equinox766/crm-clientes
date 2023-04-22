@@ -50,7 +50,7 @@ const productos = () => {
           </thead>
           <tbody className='bg-white'>
             
-            {data.obtenerProductos.map( producto => (
+            {data.obtenerProductos && data.obtenerProductos.map( producto => (
               <Producto 
                 key={producto.id}
                 producto={producto}

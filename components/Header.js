@@ -29,7 +29,7 @@ const Header = () => {
     }
 
     //si no hay informacion
-    const { nombre, apellido } = data.obtenerUsuario;
+    const { nombre, apellido } = data.obtenerUsuario ?? {};
     const cerrarSesion = () => {
         localStorage.removeItem('token');
         router.push('/login')

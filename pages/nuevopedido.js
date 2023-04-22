@@ -1,6 +1,6 @@
 import {gql, useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
-import React, { useContext, useState } from 'react';
+import React, { cache, useContext, useState } from 'react';
 import Swal from 'sweetalert2';
 import Layout from '../components/Layout';
 import AsignarCliente from '../components/pedidos/AsignarCliente';
@@ -18,6 +18,29 @@ const NUEVO_PEDIDO = gql`
     }
 `;
 
+const OBTENER_PEDIDOS = gql`
+    query ObtenerPedidoVendedor {
+      obtenerPedidoVendedor {
+          id
+          pedido {
+              id
+              cantidad
+              nombre
+          }
+          total
+          cliente {
+            id
+            nombre
+            apellido
+            email
+            telefono
+          }
+          vendedor
+          fecha
+          estado
+      }
+  }
+`;
 
 const nuevopedido = () => {
     const router = useRouter();
@@ -28,7 +51,20 @@ const nuevopedido = () => {
 
     
     //MUTATION PARA CREAR UN PEDIDO
-    const [nuevoPedido] = useMutation(NUEVO_PEDIDO)
+    const [nuevoPedido] = useMutation(NUEVO_PEDIDO, {
+        update(cache, {data: { nuevoPedido }} ) {
+            const { obtenerPedidoVendedor } = cache.readQuery({
+                query: OBTENER_PEDIDOS
+            });
+
+            cache.writeQuery({
+                query: OBTENER_PEDIDOS,
+                data: {
+                    obtenerPedidoVendedor: [...obtenerPedidoVendedor, nuevoPedido]
+                }
+            });
+        }
+    })
 
     const validarPedido = () => {
         return !productos.every(producto => producto.cantidad > 0) || total === 0 || cliente.length === 0 ? "opacity-50 cursor-not-allowed" : ""
