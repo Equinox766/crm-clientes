@@ -5,7 +5,7 @@ import fetch from "node-fetch";
 
 
 const httpLink = createHttpLink({
-    uri: 'http://localhost:4000/',
+    uri: 'https://crm-graphql-production.up.railway.app/',
     fetch
 });
 
