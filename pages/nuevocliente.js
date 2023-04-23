@@ -101,7 +101,7 @@ const nuevocliente = () => {
         });
         //SweetALERT
         Swal.fire(
-          'Correcto!s!',
+          'Correcto!',
           'Se creo el cliente correctamente',
           'success'
       )
